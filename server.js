@@ -1,0 +1,25 @@
+const express = require('express');
+const mongoose = require('mongoose');
+const PORT = process.env.PORT || 3001;
+const app = express();
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static('public'));
+
+app.use(require('./routes'));
+
+// Initialize Mongo connection - social-netowrk
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/social-network', {
+  useFindAndModify: false,
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
+
+// Log mongo queries
+mongoose.set('debug', true);
+
+// Start app on defined PORT
+app.listen(PORT, () => {
+    console.log(`Connected on PORT ${PORT}`);
+});
