@@ -28,6 +28,19 @@ const userController = {
             .catch(err => res.status(400).json(err));
     },
 
+    // POST - Add friend
+    addFriend({ params }, res) {
+        User.findOneAndUpdate({ _id: params.userId }, { $push: { friends: params.friendId }}, { new: true })
+            .then(userData => {
+                if(!userData) {
+                    res.status(404).json({ message: 'No user found by this id!'});
+                    return;
+                }
+                res.json(userData);
+            })
+            .catch(err => res.status(400).json(err));
+    },
+
     // PUT - Update user
     updateUser({ params, body }, res) {
         User.findOneAndUpdate({ _id: params.id }, body, { new: true, runValidators: true })
@@ -52,6 +65,11 @@ const userController = {
                 res.json(userData);
             })
             .catch(err => res.status(400).json(err));
+    },
+
+    // DELETE - Remove friend
+    removeFriend({ params, body }, res) {
+
     }
 };
 
