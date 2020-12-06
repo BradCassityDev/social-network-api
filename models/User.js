@@ -1,6 +1,5 @@
 const { Schema, model } = require('mongoose');
 
-
 const UserSchema = new Schema(
     {
         username: {
@@ -33,7 +32,7 @@ const UserSchema = new Schema(
 
 // Virtual to return friend count
 UserSchema.virtual('friendCount').get(function() {
-    return this.comments.reduce((total, comment) => total + comment.replies.length + 1, 0);
+    return this.friends.reduce((total) => user.friends.length + 1, 0);
 });
 
 const User = model('User', UserSchema);
