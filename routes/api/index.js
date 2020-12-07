@@ -8,6 +8,6 @@ const thoughtRoutes = require('./thought-routes');
 router.use('/users', userRoutes);
 
 // /api/thoughts - Thought routes
-//router.use('/thoughts', thoughtRoutes);
+router.use('/thoughts', thoughtRoutes);
 
 module.exports = router;

@@ -30,7 +30,6 @@ const ReactionSchema = new Schema(
     }
 );
 
-
 // Thought Schema
 const ThoughtSchema = new Schema(
     {
@@ -41,7 +40,7 @@ const ThoughtSchema = new Schema(
         },
         createdAt: {
             type: Date,
-            default: Date.now,
+            default: Date.now
             //get: dateValue => formatDate(dateValue)
         },
         username: {
@@ -61,7 +60,7 @@ const ThoughtSchema = new Schema(
 
 // Virtual - Reaction Count
 ThoughtSchema.virtual('reactionCount').get(function() {
-    return this.thought.reduce((total, thought) => thought.reactions.length + 1, 0);
+    return this.reactions.length;
 });
 
 const Thought = model('Thought', ThoughtSchema);
