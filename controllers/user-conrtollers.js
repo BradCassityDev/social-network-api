@@ -1,4 +1,4 @@
-const { User } = require('../models/index');
+const { User, Thought } = require('../models/index');
 
 const userController = {
     // GET /api/users - Get all users
@@ -65,12 +65,18 @@ const userController = {
     // DELETE - Delete user
     deleteUser({ params }, res) {
         User.findOneAndDelete({ _id: params.id })
-            .then(userData => {
+            .then(async userData => {
                 if(!userData) {
                     res.status(404).json({ message: 'No user found with that id!' });
                     return;
                 }
-                res.json(userData);
+                console.log(userData.thoughts);
+                Thought.deleteMany({ _id: userData.thoughts }, err => {
+                    if(err) {
+                        console.log('Something went wrong while deleting thoughts');
+                    }
+                    res.json('User and associated thoughts have been deleted.')
+                });
             })
             .catch(err => res.status(400).json(err));
     },
